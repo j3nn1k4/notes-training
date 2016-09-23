@@ -1,6 +1,7 @@
 var noteName = ["c", "d", "e", "f", "g", "a", "b"];
 var selectNote;
 var points = 0;
+var previousNote;
 
 // Create an SVG renderer and attach it to the DIV element named "note".
 var div = document.getElementById("note")
@@ -19,12 +20,21 @@ showPoints();
  * Anschließend werden die Notenstriche generiert und die random Note dort angezeigt
  */
 function printRandomNote() {
+
 	var arrayNum = Math.floor(Math.random() * noteName.length);
-	selectNote = noteName[arrayNum];
+		selectNote = noteName[arrayNum];
+
+	if (selectNote == previousNote) {
+		var arrayNum = Math.floor(Math.random() * noteName.length);
+		selectNote = noteName[arrayNum];
+		previousNote = selectNote;
+		printRandomNote();
+	}
+	else {
 
 	context.clear();
 	// Positioniert die Notenanzeige richtig und ermittelt die richtige Breite
-	var stave = new Vex.Flow.Stave(0, 0, 100);
+	var stave = new Vex.Flow.Stave(130, 0, 100);
 
 	// Add a clef and time signature.
 	stave.addClef("treble").addTimeSignature("4/4");
@@ -47,6 +57,8 @@ function printRandomNote() {
 
 	// Render voice
 	voice.draw(context, stave);
+	previousNote = selectNote
+	}
 }
 
 
@@ -75,6 +87,7 @@ function onNoteClick(event){
 	if (note == selectNote){
 		//Zähle Punktscore hoch
 		points += 1;
+		showPoints();
 		$('#result').text('Richtige Note gewählt!');
 
 		
@@ -82,9 +95,9 @@ function onNoteClick(event){
 		setTimeout(function() {
 			printRandomNote();
 			$('#result').text('Wähle die richtige Note!');
-			showPoints();
 			
-		}, 2000);
+			
+		}, 1500);
 	}
 	else {
 		$('#result').text('Viel Erfolg beim nächsten Mal!');
@@ -97,7 +110,7 @@ function onNoteClick(event){
  * Funktion wird aufgerufen wenn auf die Note geclickt wird
  */
 function showPoints() {
-	$('#points').text(points);
+		$('#points').text(points);
 }
 
 

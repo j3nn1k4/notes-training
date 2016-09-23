@@ -6,6 +6,14 @@ body {
 	text-align: center;
 }
 
+#points {
+	margin: 0 auto;
+	font-weight: bold;
+	text-align: center;
+	border-style: groove;
+	width: 30px;
+}
+
 #note {
 	margin: 0 auto;
 }
