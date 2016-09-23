@@ -29,35 +29,37 @@ function printRandomNote() {
 		selectNote = noteName[arrayNum];
 		previousNote = selectNote;
 		printRandomNote();
+		$('#result').text('Wähle die richtige Note!');
 	}
 	else {
 
-	context.clear();
-	// Positioniert die Notenanzeige richtig und ermittelt die richtige Breite
-	var stave = new Vex.Flow.Stave(130, 0, 100);
+		context.clear();
+		$('#result').text('Wähle die richtige Note!');
+		// Positioniert die Notenanzeige richtig und ermittelt die richtige Breite
+		var stave = new Vex.Flow.Stave(130, 0, 100);
 
-	// Add a clef and time signature.
-	stave.addClef("treble").addTimeSignature("4/4");
+		// Add a clef and time signature.
+		stave.addClef("treble").addTimeSignature("4/4");
 
-	// Connect it to the rendering context and draw!
-	stave.setContext(context).draw();
+		// Connect it to the rendering context and draw!
+		stave.setContext(context).draw();
 
-	var notes = [
-	  // A quarter-note C.
-	  new Vex.Flow.StaveNote({ keys: [selectNote + "/4"], duration: "w" }),
+		var notes = [
+		  // A quarter-note C.
+		  new Vex.Flow.StaveNote({ keys: [selectNote + "/4"], duration: "w" }),
 
-	];
+		];
 
-	// Create a voice in 4/4 and add above notes
-	var voice = new Vex.Flow.Voice({num_beats: 4,  beat_value: 4});
-	voice.addTickables(notes);
+		// Create a voice in 4/4 and add above notes
+		var voice = new Vex.Flow.Voice({num_beats: 4,  beat_value: 4});
+		voice.addTickables(notes);
 
-	// Format and justify the notes to 400 pixels.
-	var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 400);
+		// Format and justify the notes to 400 pixels.
+		var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 400);
 
-	// Render voice
-	voice.draw(context, stave);
-	previousNote = selectNote
+		// Render voice
+		voice.draw(context, stave);
+		previousNote = selectNote
 	}
 }
 
@@ -110,7 +112,7 @@ function onNoteClick(event){
  * Funktion wird aufgerufen wenn auf die Note geclickt wird
  */
 function showPoints() {
-		$('#points').text(points);
+		$('#points').html("Deine aktuelle Punktzahl ist: </br>" + points);
 }
 
 
