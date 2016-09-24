@@ -1,0 +1,30 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#wrapper {
+	text-align: center;
+}
+
+#points {
+	font-weight: bold;
+	text-align: center;
+}
+
+#menue {
+	font-weight: bold;
+	text-align: center;
+}
+
+#note {
+	margin: 0 auto;
+}
+
+#result {
+	margin-top: 20px;
+}
+
+#notes button {
+	width : 30px;
+	height: 100px;	
+}

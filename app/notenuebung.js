@@ -2,18 +2,45 @@ var noteName = ["c", "d", "e", "f", "g", "a", "b"];
 var selectNote;
 var points = 0;
 var previousNote;
+var renderer;
+var context;
 
-// Create an SVG renderer and attach it to the DIV element named "note".
-var div = document.getElementById("note")
-var renderer = new Vex.Flow.Renderer(div, Vex.Flow.Renderer.Backends.SVG);
-renderer.resize(400, 100)
+// führe Initialisierung nach laden des gesamten Dokumentes durch
+$(function() {
+	initRenderer();
+	createButtons(true);
+	printRandomNote();
+	showPoints();
+	bindEventHandler();
+});
 
-// Configure the rendering context.
-var context = renderer.getContext();
+/**
+ * Funktion führt das initiale Rendering für die Notenlinien aus
+ */
+function initRenderer() {
+	// Create an SVG renderer and attach it to the DIV element named "note".
+	var div = document.getElementById("note")
+	renderer = new Vex.Flow.Renderer(div, Vex.Flow.Renderer.Backends.SVG);
+	renderer.resize(375, 100)
 
-createButtons();
-printRandomNote();
-showPoints();
+	// Configure the rendering context.
+	context = renderer.getContext();
+}
+
+/**
+ * Funktion verbindte die HTML Buttons mit dem Javascript Code
+ */
+function bindEventHandler() {
+	$('#ctrlShowNotes').on('click', function() {
+		console.log('zeige Noten');
+		createButtons(true);
+	});
+
+
+	$('#ctrlHideNotes').on('click', function() {
+		createButtons(false);
+	});
+}
 
 /**
  * Diese Funktion erzeugt eine Random Note
@@ -63,19 +90,24 @@ function printRandomNote() {
 	}
 }
 
-
-
 /**
  * Diese Funktion erstellt die Buttons, die die Klaviertastatur darstellen
  */
-function createButtons(){
+function createButtons(showNotes) {
+
+	// Lösche alle direkten Kind-Elemente in notes von Typ Button
+	$('#notes > button').remove();
+
 	for (var i = 0; i < noteName.length; i++) {
-		var aNote = $('<button>')
+		var $noteButton = $('<button>')
 			.attr('data-note', noteName[i])
-			.text(noteName[i])
 			.on('click', onNoteClick);
 
-		$('#notes').append(aNote);
+		if(showNotes) {
+			$noteButton.text(noteName[i]);
+		}
+
+		$('#notes').append($noteButton);	
 	}
 }
 
@@ -112,9 +144,5 @@ function onNoteClick(event){
  * Funktion wird aufgerufen wenn auf die Note geclickt wird
  */
 function showPoints() {
-		$('#points').html("Deine aktuelle Punktzahl ist: </br>" + points);
+	$('#points').html("Deine aktuelle Punktzahl ist: </br>" + points);
 }
-
-
-
-
