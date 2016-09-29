@@ -12,6 +12,7 @@ $(function() {
 	printRandomNote();
 	showPoints();
 	bindEventHandler();
+	countToNewNote();
 });
 
 /**
@@ -36,7 +37,6 @@ function bindEventHandler() {
 		createButtons(true);
 	});
 
-
 	$('#ctrlHideNotes').on('click', function() {
 		createButtons(false);
 	});
@@ -59,7 +59,7 @@ function printRandomNote() {
 		$('#result').text('Wähle die richtige Note!');
 	}
 	else {
-
+		countToNewNote();
 		context.clear();
 		$('#result').text('Wähle die richtige Note!');
 		// Positioniert die Notenanzeige richtig und ermittelt die richtige Breite
@@ -112,6 +112,26 @@ function createButtons(showNotes) {
 }
 
 /**
+ * Countdown bis zur nächsten Note
+ */
+ function countToNewNote(){
+	var counter = 10;
+	var newElement = document.createElement("p");
+	var newElement = document.createElement("p");
+	newElement.innerHTML = "You can download the file in 10 seconds.";
+	var id;
+
+	id = setInterval(function() {
+	    counter--;
+	    if(counter < 0) {
+	        clearInterval(id);
+	        printRandomNote();
+	    } else {
+	        $('#test').text("Wähle eine Note in  " + counter.toString() + " Sekunden.");
+	    }
+		}, 1000);
+}
+/**
  * Funktion wird aufgerufen wenn auf die Note geclickt wird
  */
 function onNoteClick(event){
@@ -125,12 +145,10 @@ function onNoteClick(event){
 		$('#result').text('Richtige Note gewählt!');
 
 		
-		// Zeige die nächste Note nach 2000ms an.
+		// Zeige die nächste Note nach 1500ms an.
 		setTimeout(function() {
 			printRandomNote();
-			$('#result').text('Wähle die richtige Note!');
-			
-			
+			$('#result').text('Wähle die richtige Note!');			
 		}, 1500);
 	}
 	else {
