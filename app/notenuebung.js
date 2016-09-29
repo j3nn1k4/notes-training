@@ -4,6 +4,7 @@ var points = 0;
 var previousNote;
 var renderer;
 var context;
+var idCounter;	
 
 // führe Initialisierung nach laden des gesamten Dokumentes durch
 $(function() {
@@ -116,21 +117,41 @@ function createButtons(showNotes) {
  */
  function countToNewNote(){
 	var counter = 10;
-	var newElement = document.createElement("p");
-	var newElement = document.createElement("p");
-	newElement.innerHTML = "You can download the file in 10 seconds.";
-	var id;
 
-	id = setInterval(function() {
+	if(idCounter) {
+		clearInterval(idCounter);
+	}
+
+	idCounter = setInterval(function() {
 	    counter--;
 	    if(counter < 0) {
-	        clearInterval(id);
+	        clearInterval(idCounter);
 	        printRandomNote();
 	    } else {
-	        $('#test').text("Wähle eine Note in  " + counter.toString() + " Sekunden.");
+	        $('#countdownTimer').text("Wähle eine Note in  " + counter.toString() + " Sekunden.");
 	    }
-		}, 1000);
+	}, 1000);
 }
+
+function stopCounter() {
+	clearInterval(idCounter);
+	$('countdownTimer').text('Klicken Sie Start, um den Countdown zu beginnen.')
+}
+
+/**
+ * Pausiert den Countdown
+ */
+function onPauseClick(){
+	$('#pauseCountdown').on('click', function() {
+		stopCounter();
+		console.log();
+	});
+	$('#startCountdown').on('click', function() {
+		countToNewNote();
+	});
+}
+
+
 /**
  * Funktion wird aufgerufen wenn auf die Note geclickt wird
  */
